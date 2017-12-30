@@ -1,17 +1,14 @@
-import { Slot } from './slot';
 
-export class Layer {
 
-  slots: Slot[];
+export class Layer<T> {
+
+  slots: T[];
   size: number;
   step: number;
 
-  constructor(size: number, step: number) {
+  constructor(size: number, step: number = null) {
     this.size = size;
     this.step = step;
-    this.slots = [];
-    for (let i = 0; i < this.size; i++) {
-      this.slots[i] = new Slot(i, this.step);
-    }
+    this.slots = new Array<T>(this.size);
   }
 }

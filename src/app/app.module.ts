@@ -9,10 +9,7 @@ import { Urls } from './server-urls';
 import { CircuitComponent } from './components/circuit/circuit.component';
 import { ResultsComponent } from './components/results/results.component';
 import { CircuitService } from './services/circuit_service/circuit.service';
-import { RegisterComponent } from './components/register/register.component';
-import { QubitComponent } from './components/qubit/qubit.component';
-import { LayerComponent } from './components/layer/layer.component';
-import { SlotComponent } from './components/slot/slot.component';
+import { ElementComponent } from './components/element/element.component';
 
 
 @NgModule({
@@ -21,10 +18,7 @@ import { SlotComponent } from './components/slot/slot.component';
     GatesComponent,
     CircuitComponent,
     ResultsComponent,
-    RegisterComponent,
-    QubitComponent,
-    LayerComponent,
-    SlotComponent,
+    ElementComponent,
   ],
   imports: [
     BrowserModule,

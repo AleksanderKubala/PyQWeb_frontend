@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-1">
+      <div *ngIf="register" class="pull-right">
+        <ul>
+          <li *ngFor="let qubit of register.slots">
+            <app-element [element]="qubit" (click)="qubit.changeValue()" ></app-element>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-11 btn-group">
+      <div *ngIf="layers" class="pull-left">
+        <ul class="list-inline">
+          <li *ngFor="let layer of layers">
+            <ul>
+              <li *ngFor="let slot of layer.slots">
+                <app-element [element]="slot"></app-element>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

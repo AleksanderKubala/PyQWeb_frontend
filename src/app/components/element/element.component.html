@@ -1,0 +1,3 @@
+<div *ngIf="element">
+  <input type="image" src="{{element.image}}" (mouseover)="element.select()" (mouseout)="element.deselect()"/>
+</div>
