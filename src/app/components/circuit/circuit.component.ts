@@ -4,6 +4,7 @@ import { Layer } from '../../classes/layer';
 import { Qubit } from '../../classes/qubit';
 import { CircuitElement } from '../../classes/circuit_element';
 import { EMPTY } from '../../img_config';
+import { GateService } from '../../services/gate_service/gate.service';
 
 @Component({
   selector: 'app-circuit',
@@ -19,7 +20,7 @@ export class CircuitComponent implements OnInit {
   register: Layer<Qubit>;
   layers: Layer<CircuitElement>[];
 
-  constructor(private circuitService: CircuitService) {}
+  constructor(private circuitService: CircuitService, private gateService: GateService) {}
 
   ngOnInit() {
     this.circuitService.getRegisterInfo().then(response => {
@@ -50,6 +51,8 @@ export class CircuitComponent implements OnInit {
     }
   }
 
-
+  getCurrentGate(): string {
+    return this.gateService.getSelectedGate();
+  }
 
 }

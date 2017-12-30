@@ -11,9 +11,19 @@ export class GateService {
 
   constructor(private http: HttpClient, private urls: Urls) { }
 
+  private selectedGate: string;
+
   public getGates(): Observable<string[]> {
     return this.http.get<GateSet>(this.urls.gatesUrl)
       .map(response => response.signatures);
+  }
+
+  public getSelectedGate(): string {
+    return this.selectedGate;
+  }
+
+  public setSelectedGate(gate: string): void {
+    this.selectedGate = gate;
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

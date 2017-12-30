@@ -2,7 +2,7 @@
 <div class="btn-group" role="group" data-toggle="buttons">
   <ul class="list-inline">
     <li *ngFor="let gate of gates">
-        <button type="button" class="btn btn-default" data-toggle="button">{{gate}}</button>
+        <button type="button" class="btn btn-default" data-toggle="button" (click)="selectGate(gate)">{{gate}}</button>
     </li>
   </ul>
 </div>

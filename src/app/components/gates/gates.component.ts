@@ -10,7 +10,6 @@ import { GateService } from '../../services/gate_service/gate.service';
 export class GatesComponent implements OnInit {
 
   gates: string[];
-  selectedGate: string;
 
   constructor(private gateService: GateService) { }
 
@@ -20,5 +19,9 @@ export class GatesComponent implements OnInit {
 
   getGates(): void {
     this.gateService.getGates().subscribe(gates => this.gates = gates);
+  }
+
+  selectGate(gate: string): void {
+    this.gateService.setSelectedGate(gate);
   }
 }

@@ -15,7 +15,7 @@
           <li *ngFor="let layer of layers">
             <ul>
               <li *ngFor="let slot of layer.slots">
-                <app-element [element]="slot"></app-element>
+                <app-element [element]="slot" (click)="slot.setName(getCurrentGate().toLowerCase())"></app-element>
               </li>
             </ul>
           </li>
