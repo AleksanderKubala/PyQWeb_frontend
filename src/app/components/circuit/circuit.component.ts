@@ -15,17 +15,17 @@ export class CircuitComponent implements OnInit {
 
   size: number;
   state: number;
-  // TODO: create url and both backend and frontend service for layer count requests
-  layerCount = 10;
+  layerCount: number;
   register: Layer<Qubit>;
   layers: Layer<CircuitElement>[];
 
   constructor(private circuitService: CircuitService, private gateService: GateService) {}
 
   ngOnInit() {
-    this.circuitService.getRegisterInfo().then(response => {
+    this.circuitService.getCircuit().then(response => {
       this.size = response.size;
       this.state = response.state;
+      this.layerCount = response.layerCount;
       this.register = new Layer<Qubit>(this.size);
       for (let i = 0; i < this.size; i++) {
         this.register.slots[i] = new Qubit(0);

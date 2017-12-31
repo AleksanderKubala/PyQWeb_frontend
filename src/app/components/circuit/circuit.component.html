@@ -4,7 +4,7 @@
       <div *ngIf="register" class="pull-right">
         <ul>
           <li *ngFor="let qubit of register.slots">
-            <app-element [element]="qubit" (click)="qubit.changeValue()" ></app-element>
+            <app-element [element]="qubit" (click)="qubit.changeValue()"></app-element>
           </li>
         </ul>
       </div>
@@ -15,7 +15,7 @@
           <li *ngFor="let layer of layers">
             <ul>
               <li *ngFor="let slot of layer.slots">
-                <app-element [element]="slot" (click)="slot.setName(getCurrentGate().toLowerCase())"></app-element>
+                <app-element [element]="slot" (click)="slot.setName(getCurrentGate().toLowerCase())" (contextmenu)="slot.setName('empty')"></app-element>
               </li>
             </ul>
           </li>
