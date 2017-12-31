@@ -1,6 +1,6 @@
 import { CircuitChange } from './circuit_change';
 
-export class RegisterChange {
+export class RegisterResponse {
 
   changes: CircuitChange;
   size: number;

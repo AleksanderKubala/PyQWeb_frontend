@@ -4,7 +4,7 @@
       <div *ngIf="register" class="pull-right">
         <ul>
           <li *ngFor="let qubit of register.slots">
-            <app-element [element]="qubit" (click)="qubit.changeValue()"></app-element>
+            <app-element [element]="qubit" (click)="postRegisterChanges(qubit)"></app-element>
           </li>
         </ul>
       </div>

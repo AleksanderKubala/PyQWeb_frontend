@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GateService } from '../../services/gate_service/gate.service';
+import { CONTROL } from '../../img_config';
 
 @Component({
   selector: 'app-gates',
@@ -10,15 +11,15 @@ import { GateService } from '../../services/gate_service/gate.service';
 export class GatesComponent implements OnInit {
 
   gates: string[];
+  modifiers: string[];
 
   constructor(private gateService: GateService) { }
 
   ngOnInit() {
-    this.getGates();
-  }
-
-  getGates(): void {
-    this.gateService.getGates().subscribe(gates => this.gates = gates);
+    this.modifiers = [CONTROL];
+    this.gateService.getGates().then(response => {
+      this.gates = response;
+    });
   }
 
   selectGate(gate: string): void {

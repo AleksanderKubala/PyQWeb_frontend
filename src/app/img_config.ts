@@ -7,3 +7,4 @@ export const MID = '_mid';
 export const SELECT = '_select';
 export const EXT = '.bmp';
 export const EMPTY = 'empty';
+export const CONTROL = 'crtl';

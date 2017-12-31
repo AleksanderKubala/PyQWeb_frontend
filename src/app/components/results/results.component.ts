@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ResultsService } from '../../services/results_service/results.service';
+import {isNullOrUndefined} from 'util';
+import { SingleResult } from '../../responses/single_result'
+
 
 @Component({
   selector: 'app-results',
@@ -7,9 +11,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultsComponent implements OnInit {
 
-  constructor() { }
+  steps: number;
+  results: SingleResult[];
+
+  constructor(private resultsService: ResultsService) { }
 
   ngOnInit() {
+  }
+
+  compute() {
+    if (isNullOrUndefined(this.steps)) {
+      this.steps = 0;
+    }
+    this.resultsService.compute(this.steps).then(response => {
+      this.results = response.results;
+    });
   }
 
 }

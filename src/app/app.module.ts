@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { GatesComponent } from './components/gates/gates.component';
@@ -10,6 +11,7 @@ import { CircuitComponent } from './components/circuit/circuit.component';
 import { ResultsComponent } from './components/results/results.component';
 import { CircuitService } from './services/circuit_service/circuit.service';
 import { ElementComponent } from './components/element/element.component';
+import { ResultsService } from './services/results_service/results.service';
 
 
 @NgModule({
@@ -22,9 +24,10 @@ import { ElementComponent } from './components/element/element.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
-  providers: [GateService, Urls, CircuitService],
+  providers: [GateService, Urls, CircuitService, ResultsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

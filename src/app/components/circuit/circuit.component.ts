@@ -41,6 +41,18 @@ export class CircuitComponent implements OnInit {
     });
   }
 
+  postRegisterChanges(changedQubit: Qubit): void {
+    changedQubit.changeValue();
+    let newState = '';
+    for (let i = 0; i < this.register.size; i++) {
+      newState = newState + this.register.slots[i].value.toString();
+    }
+    this.circuitService.postRegisterChanges(this.size, Number.parseInt(newState, 2)).then(response => {
+      this.state = response.state;
+      this.setRegister();
+    });
+  }
+
   setRegister(): void {
     let binary = this.state.toString(2);
     for (let i = this.size - binary.length; i > 0; i--) {
@@ -48,6 +60,7 @@ export class CircuitComponent implements OnInit {
     }
     for (let i = 0; i < binary.length; i++) {
       this.register.slots[i].setValue(Number.parseInt(binary.charAt(i)));
+      this.register.slots[i].updateName();
     }
   }
 

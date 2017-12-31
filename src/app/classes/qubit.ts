@@ -12,13 +12,15 @@ export class Qubit extends CircuitElement {
 
   public setValue(value: number): void {
     this.value = value;
-    this.name = this.value.toString();
-    this.updateImage();
   }
 
   public changeValue(): void {
     this.value = 1 - this.value;
+  }
+
+  public updateName(): void {
     this.name = this.value.toString();
     this.updateImage();
   }
+
 }

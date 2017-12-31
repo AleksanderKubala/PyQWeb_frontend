@@ -1,3 +1,43 @@
-<p>
-  results works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="input-group top-spacer-20">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="button" (click)="compute()">Compute!</button>
+      </span>
+      <input [(ngModel)]="steps" type="text" class="form-control" placeholder="steps">
+    </div>
+  </div>
+  <div class="row top-spacer-20">
+    <label>Results:</label>
+  </div>
+  <div class="row pull-left">
+    <div class="pre-scrollable">
+      <div *ngIf="results">
+        <div class="col-sm-4">
+          <label>Amplitude:</label>
+          <ul>
+            <li *ngFor="let result of results">
+              <label class="result-text">{{result.amplitude}}</label>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-4">
+          <label>Bits:</label>
+          <ul>
+            <li *ngFor="let result of results">
+              <label class="result-text">{{result.bits}}</label>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-4">
+          <label>Probability:</label>
+          <ul>
+            <li *ngFor="let result of results">
+              <label class="result-text">{{result.probability}}</label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

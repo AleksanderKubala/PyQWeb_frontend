@@ -1,6 +1,3 @@
-/**
- * Created by Olek on 2017-12-27.
- */
 
 export class Removal {
   layer: number;

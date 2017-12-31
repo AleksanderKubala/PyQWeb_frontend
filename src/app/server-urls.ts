@@ -9,10 +9,9 @@ export class Urls {
   baseUrl = 'http://localhost:8000/';
   gatesUrl = this.baseUrl + 'gates/';
   circuitUrl = this.baseUrl + 'circuit/';
+  registerUrl = this.baseUrl + 'register/';
+  computeUrl = this.baseUrl + 'compute/';
   addGateUrl = this.circuitUrl + 'addgate/';
-  computeUrl = this.circuitUrl + 'compute/';
   removeGateUrl = this.circuitUrl + 'remove/';
-  sizeUrl = this.circuitUrl + 'size/';
-  regStateUrl = this.circuitUrl + 'state/';
 
 }

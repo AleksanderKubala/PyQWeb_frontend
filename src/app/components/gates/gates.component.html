@@ -1,10 +1,33 @@
-<label>Basic Gates:</label>
-<div class="btn-group" role="group" data-toggle="buttons">
-  <ul class="list-inline">
-    <li *ngFor="let gate of gates">
-        <button type="button" class="btn btn-default" data-toggle="button" (click)="selectGate(gate)">{{gate}}</button>
-    </li>
-  </ul>
+<div class="container-fluid">
+  <div class="row">
+    <label>Basic Gates:</label>
+  </div>
+  <div class="row">
+    <div id="gates" class="btn-group" data-toggle="buttons-radio">
+      <ul class="list-inline" >
+        <li *ngFor="let gate of gates">
+          <button type="button" class="btn btn-default" data-toggle="gates" (click)="selectGate(gate)">
+            {{gate.toUpperCase()}}
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <label>Modifiers:</label>
+  </div>
+  <div class="row">
+    <div class="btn-group" role="group" data-toggle="buttons">
+      <ul class="list-inline">
+        <li *ngFor="let modifier of modifiers">
+          <button type="button" class="btn btn-default" data-toggle="button" (click)="selectGate(modifier)">
+            {{modifier.toUpperCase()}}
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
+
 
 
