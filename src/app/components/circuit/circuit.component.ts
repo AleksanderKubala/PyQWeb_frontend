@@ -3,13 +3,16 @@ import { CircuitService } from '../../services/circuit_service/circuit.service';
 import { Layer } from '../../classes/layer';
 import { Qubit } from '../../classes/qubit';
 import { Slot } from '../../classes/slot';
-import { GateInfoResponse } from '../../responses/gateinfo';
 import { EMPTY, CONTROL, MODIFIERS, MULTIGATES } from '../../img_config';
 import { CircuitChangeResponse } from '../../responses/circuit_change';
 import {isNullOrUndefined} from 'util';
 import { GateResponse } from '../../responses/gate';
-import {GatesComponent} from '../gates/gates.component';
 import {GateService} from '../../services/gate_service/gate.service';
+import {Register} from '../../classes/register';
+import {CircuitLayer} from '../../classes/circuit_layer';
+import {LayerResponse} from '../../responses/layer';
+import {RemoveGateResponse} from '../../responses/remove_gate';
+import {CircuitResponse} from '../../responses/circuit';
 
 @Component({
   selector: 'app-circuit',
@@ -18,11 +21,12 @@ import {GateService} from '../../services/gate_service/gate.service';
 })
 export class CircuitComponent implements OnInit {
 
+  sizeRequest: number;
   size: number;
   state: number;
   layerCount: number;
-  register: Layer<Qubit>;
-  layers: Layer<Slot>[];
+  register: Register;
+  layers: CircuitLayer[];
 
   gateBegin: Slot;
 
@@ -30,22 +34,40 @@ export class CircuitComponent implements OnInit {
 
   ngOnInit() {
     this.circuitService.getCircuit().then(response => {
-      this.size = response.size;
+      this.loadCircuit(response);
+      /*this.size = response.size;
       this.state = response.state;
       this.layerCount = response.layerCount;
-      this.register = new Layer<Qubit>(this.size);
+      this.register = new Register(this.size);
       for (let i = 0; i < this.size; i++) {
         this.register.slots[i] = new Qubit(i, 0, 0);
       }
       this.setRegister();
       this.layers = new Array<Layer<Slot>>(this.layerCount);
+
       for (let i = 0; i < this.layerCount; i++) {
-        this.layers[i] = new Layer<Slot>(this.size, i);
+        this.layers[i] = new CircuitLayer(this.size, i);
         for (let j = 0; j < this.size; j++) {
           this.layers[i].slots[j] = new Slot(j, i);
         }
-      }
+      }*/
     });
+  }
+
+  loadCircuit(circuit: CircuitResponse): void {
+    this.size = circuit.size;
+    this.state = circuit.state;
+    this.layerCount = circuit.layerCount;
+    this.register = new Register(this.size);
+    for (let i = 0; i < this.size; i++) {
+      this.register.slots[i] = new Qubit(i, 0, 0);
+    }
+    this.setRegister();
+    this.layers = new Array<CircuitLayer>(this.layerCount);
+    for (let i = 0; i < this.layerCount; i++) {
+      this.layers[i] = new CircuitLayer(this.size, i);
+    }
+    this.processCircuitChange(circuit.layers, []);
   }
 
   addGate(slot: Slot): void {
@@ -92,8 +114,7 @@ export class CircuitComponent implements OnInit {
       qubits.push(slot.row);
       gate = currentGate;
     }
-    this.gateBegin.unfreeze();
-    this.gateBegin = undefined;
+    this.freeGateBegin();
     this.postAddGateRequest(gate, qubits, slot.col, controls);
   }
 
@@ -108,8 +129,12 @@ export class CircuitComponent implements OnInit {
   }
 
   removeGate(slot: Slot): boolean {
-    this.postRemoveGateRequest([slot.row], slot.col);
-    return slot.onContextMenu();
+    if (isNullOrUndefined(this.gateBegin)) {
+      this.postRemoveGateRequest([slot.row], slot.col);
+      return slot.onContextMenu();
+    } else {
+      this.freeGateBegin();
+    }
   }
 
   setQubit(changedQubit: Qubit): void {
@@ -122,42 +147,51 @@ export class CircuitComponent implements OnInit {
     this.postRegisterChanges(this.size, newState);
   }
 
-  resizeRegister(newSize: number): void {
-    this.postRegisterChanges(newSize, this.state);
+  resizeRegister(): void {
+    if (isNullOrUndefined(this.sizeRequest)) {
+      this.sizeRequest = this.size;
+    }
+    this.postRegisterChanges(this.sizeRequest, this.state);
   }
 
   postRegisterChanges(size: number, state: number): void {
     this.circuitService.postRegisterChanges(size, state).then(response => {
       this.state = response.state;
+      this.size = response.size;
+      this.processCircuitChange([], response.changes.removed);
+      this.register.resize(this.size);
+      for (let i = 0; i < this.layers.length; i++) {
+        this.layers[i].resize(this.size);
+      }
       this.setRegister();
     });
   }
 
   postAddGateRequest(gate: string, qubits: number[], layer: number, controls: number[]): void {
     this.circuitService.postAddGate(gate, qubits, layer, controls).then(response => {
-      this.processCircuitChange(response);
+      this.processCircuitChange(response.added, response.removed);
     });
   }
 
   postRemoveGateRequest(qubits: number[], layer: number): void {
     this.circuitService.postRemoveGate(qubits, layer).then(response => {
-      this.processCircuitChange(response);
-    })
+      this.processCircuitChange(response.added, response.removed);
+    });
   }
 
-  processCircuitChange(changes: CircuitChangeResponse): void {
-    for (let i = 0; i < changes.removed.length; i++) {
-      const layer = changes.removed[i].step;
-      for (let j = 0; j < changes.removed[i].qubits.length; j++) {
-        const slot = this.layers[layer].slots[changes.removed[i].qubits[j]];
+  processCircuitChange(added: LayerResponse[], removed: RemoveGateResponse[]): void {
+    for (let i = 0; i < removed.length; i++) {
+      const layer = removed[i].step;
+      for (let j = 0; j < removed[i].qubits.length; j++) {
+        const slot = this.layers[layer].slots[removed[i].qubits[j]];
         slot.clear();
         slot.updateImage();
       }
     }
-    for (let i = 0; i < changes.added.length; i++) {
-      const layer = changes.added[i].step;
-      for (let j = 0; j < changes.added[i].gates.length; j++) {
-        this.setSlotsImage(changes.added[i].gates[j], layer);
+    for (let i = 0; i < added.length; i++) {
+      const layer = added[i].step;
+      for (let j = 0; j < added[i].gates.length; j++) {
+        this.setSlotsImage(added[i].gates[j], layer);
       }
     }
   }
@@ -197,6 +231,11 @@ export class CircuitComponent implements OnInit {
       this.register.slots[i].setValue(Number.parseInt(binary.charAt(i)));
       this.register.slots[i].updateName();
     }
+  }
+
+  freeGateBegin(): void {
+    this.gateBegin.unfreeze();
+    this.gateBegin = undefined;
   }
 
 }

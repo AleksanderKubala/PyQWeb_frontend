@@ -1,6 +1,6 @@
 import { UP, MID, DOWN, SELECT, SOURCE, EXT } from '../img_config';
 
-export class CircuitElement {
+export class CircuitElement  {
 
   row: number;
   col: number;
