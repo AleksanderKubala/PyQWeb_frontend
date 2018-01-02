@@ -5,8 +5,8 @@ export class Qubit extends CircuitElement {
 
   value: number;
 
-  constructor(value: number) {
-    super(value.toString());
+  constructor(row: number, col: number, value: number) {
+    super(row, col, value.toString());
     this.value = value;
   }
 

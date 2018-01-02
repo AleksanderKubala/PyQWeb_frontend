@@ -1,12 +1,12 @@
-import { CircuitChange } from './circuit_change';
+import { CircuitChangeResponse } from './circuit_change';
 
 export class RegisterResponse {
 
-  changes: CircuitChange;
+  changes: CircuitChangeResponse;
   size: number;
   state: number;
 
-  constructor (changes: CircuitChange, size: number, state: number) {
+  constructor (changes: CircuitChangeResponse, size: number, state: number) {
     this.changes = changes;
     this.state = state;
     this.size = size;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { GateSet } from '../../responses/gateset';
+import { GateSetResponse } from '../../responses/gateset';
+import { GateInfoResponse } from '../../responses/gateinfo';
 import 'rxjs/add/operator/map';
 import { of } from 'rxjs/observable/of';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -8,22 +9,22 @@ import { Urls } from '../../server-urls';
 @Injectable()
 export class GateService {
 
-  constructor(private http: HttpClient, private urls: Urls) { }
-
   private selectedGate: string;
 
-  public async getGates(): Promise<string[]> {
-    return await this.http.get<GateSet>(this.urls.gatesUrl)
+  constructor(private http: HttpClient, private urls: Urls) { }
+
+  public async getGates(): Promise<GateSetResponse> {
+    return await this.http.get<GateSetResponse>(this.urls.gatesUrl)
       .toPromise()
-      .then(response => response.signatures);
+      .then();
   }
 
-  public getSelectedGate(): string {
-    return this.selectedGate;
-  }
-
-  public setSelectedGate(gate: string): void {
+  setSelectedGate(gate: string): void {
     this.selectedGate = gate;
+  }
+
+  getSelectedGate(): string {
+    return this.selectedGate;
   }
 
   /*

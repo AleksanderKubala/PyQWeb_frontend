@@ -1,13 +1,13 @@
-import { Layer } from './layer';
+import { LayerResponse } from './layer';
 
-export class Circuit {
+export class CircuitResponse {
 
   size: number;
   state: number;
   layerCount: number;
-  layers: Layer[];
+  layers: LayerResponse[];
 
-  constructor (size: number, state: number, layerCount: number, layers: Layer[]) {
+  constructor (size: number, state: number, layerCount: number, layers: LayerResponse[]) {
     this.size = size;
     this.state = state;
     this.layerCount = layerCount;

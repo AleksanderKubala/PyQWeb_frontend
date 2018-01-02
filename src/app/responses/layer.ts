@@ -1,11 +1,11 @@
-import { Gate } from './gate';
+import { GateResponse } from './gate';
 
-export class Layer {
+export class LayerResponse {
 
   step: number;
-  gates: Gate[];
+  gates: GateResponse[];
 
-  constructor(step: number, gates: Gate[]) {
+  constructor(step: number, gates: GateResponse[]) {
     this.step = step;
     this.gates = gates;
   }

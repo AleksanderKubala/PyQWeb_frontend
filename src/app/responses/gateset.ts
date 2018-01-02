@@ -1,4 +1,5 @@
+import { GateInfoResponse } from './gateinfo';
 
-export class GateSet {
-  signatures: string[];
+export class GateSetResponse {
+  gates: GateInfoResponse[];
 }

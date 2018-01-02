@@ -11,7 +11,6 @@ export class Urls {
   circuitUrl = this.baseUrl + 'circuit/';
   registerUrl = this.baseUrl + 'register/';
   computeUrl = this.baseUrl + 'compute/';
-  addGateUrl = this.circuitUrl + 'addgate/';
-  removeGateUrl = this.circuitUrl + 'remove/';
+  modifyCircuitUrl = this.baseUrl + 'change/';
 
 }

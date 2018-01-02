@@ -1,3 +1,7 @@
 .list-inline>li {
   margin-right: -10px;
 }
+
+button {
+  text-transform: uppercase;
+}

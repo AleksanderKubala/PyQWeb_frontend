@@ -3,11 +3,11 @@
     <label>Basic Gates:</label>
   </div>
   <div class="row">
-    <div id="gates" class="btn-group" data-toggle="buttons-radio">
+    <div *ngIf="gates" id="gates" class="btn-group" data-toggle="buttons-radio">
       <ul class="list-inline" >
         <li *ngFor="let gate of gates">
           <button type="button" class="btn btn-default" data-toggle="gates" (click)="selectGate(gate)">
-            {{gate.toUpperCase()}}
+            {{gate}}
           </button>
         </li>
       </ul>
@@ -21,7 +21,7 @@
       <ul class="list-inline">
         <li *ngFor="let modifier of modifiers">
           <button type="button" class="btn btn-default" data-toggle="button" (click)="selectGate(modifier)">
-            {{modifier.toUpperCase()}}
+            {{modifier}}
           </button>
         </li>
       </ul>

@@ -1,3 +1,5 @@
 <div *ngIf="element">
-  <input type="image" src="{{element.image}}" (mouseover)="element.select()" (mouseout)="element.deselect()"/>
+  <input type="image" src="{{element.image}}" (mouseover)="element.select()" (mouseout)="element.deselect()" (contextmenu)="element.onContextMenu()"/>
 </div>
+
+

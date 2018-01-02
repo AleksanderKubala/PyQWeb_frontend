@@ -1,5 +1,5 @@
 
-export class Gate {
+export class GateResponse {
   gate: string;
   qubits: number[];
   controls: number[];

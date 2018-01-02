@@ -1,4 +1,4 @@
-
+import {GateInfoResponse} from './responses/gateinfo';
 
 export const SOURCE = 'http://127.0.0.1:8887/';
 export const UP = '_up';
@@ -7,4 +7,7 @@ export const MID = '_mid';
 export const SELECT = '_select';
 export const EXT = '.bmp';
 export const EMPTY = 'empty';
-export const CONTROL = 'crtl';
+export const CONTROL = 'ctrl';
+export let MODIFIERS = [CONTROL];
+export let MULTIGATES = [CONTROL];
+

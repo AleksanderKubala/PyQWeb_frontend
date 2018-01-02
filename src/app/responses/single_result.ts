@@ -1,5 +1,5 @@
 
-export class SingleResult {
+export class SingleResultResponse {
 
   amplitude: string;
   bits: string;

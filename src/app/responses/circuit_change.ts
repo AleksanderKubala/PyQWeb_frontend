@@ -1,11 +1,11 @@
-import { Gate } from './gate';
-import { Removal } from './removal';
+import { RemoveGateResponse } from './remove_gate';
+import { LayerResponse } from './layer';
 
-export class CircuitChange {
-  added: Gate[];
-  removed: Removal[];
+export class CircuitChangeResponse {
+  added: LayerResponse[];
+  removed: RemoveGateResponse[];
 
-  constructor(added: Gate[], removed: Removal[]) {
+  constructor(added: LayerResponse[], removed: RemoveGateResponse[]) {
     this.added = added;
     this.removed = removed;
   }

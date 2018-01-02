@@ -1,10 +1,10 @@
-import { SingleResult } from './single_result';
+import { SingleResultResponse } from './single_result';
 
 export class ComputeResponse {
 
-  results: SingleResult[];
+  results: SingleResultResponse[];
 
-  constructor (results: SingleResult[]) {
+  constructor (results: SingleResultResponse[]) {
     this.results = results;
   }
 }
