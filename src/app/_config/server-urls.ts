@@ -1,6 +1,4 @@
-/**
- * Created by Olek on 2017-12-20.
- */
+
 import { Injectable } from '@angular/core';
 
 @Injectable()

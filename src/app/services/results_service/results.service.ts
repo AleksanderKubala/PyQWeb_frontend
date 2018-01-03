@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Urls } from '../../server-urls';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Urls } from '../../_config/server-urls';
+import { HttpClient} from '@angular/common/http';
 
 import { ComputeRequest } from '../../requests/compute';
 import { ComputeResponse } from '../../responses/compute';

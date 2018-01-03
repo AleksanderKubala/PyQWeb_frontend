@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ResultsService } from '../../services/results_service/results.service';
 import {isNullOrUndefined} from 'util';
-import { SingleResultResponse } from '../../responses/single_result'
+import { SingleResultResponse } from '../../responses/single_result';
 
 
 @Component({

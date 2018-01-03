@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Urls } from '../../server-urls';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Urls } from '../../_config/server-urls';
+import { HttpClient} from '@angular/common/http';
 
 // responses
 import { CircuitResponse } from '../../responses/circuit';
 import { RegisterResponse } from '../../responses/register';
 import { CircuitChangeResponse } from '../../responses/circuit_change';
-import { RemoveGateResponse } from '../../responses/remove_gate';
 
 // requests
 import { RegisterRequest } from '../../requests/register';

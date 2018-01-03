@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { CircuitService } from '../../services/circuit_service/circuit.service';
-import { Layer } from '../../classes/layer';
 import { Qubit } from '../../classes/qubit';
 import { Slot } from '../../classes/slot';
-import { EMPTY, CONTROL, MODIFIERS, MULTIGATES } from '../../img_config';
-import { CircuitChangeResponse } from '../../responses/circuit_change';
+import { EMPTY, CONTROL, MODIFIERS, MULTIGATES } from '../../_config/img_config';
 import {isNullOrUndefined} from 'util';
 import { GateResponse } from '../../responses/gate';
-import {GateService} from '../../services/gate_service/gate.service';
 import {Register} from '../../classes/register';
 import {CircuitLayer} from '../../classes/circuit_layer';
 import {LayerResponse} from '../../responses/layer';
 import {RemoveGateResponse} from '../../responses/remove_gate';
 import {CircuitResponse} from '../../responses/circuit';
+import {EventService} from '../../services/event_service/event.service';
+import {Event} from '../../_config/event_config';
 
 @Component({
   selector: 'app-circuit',
@@ -21,6 +20,7 @@ import {CircuitResponse} from '../../responses/circuit';
 })
 export class CircuitComponent implements OnInit {
 
+  selectedGate: string;
   sizeRequest: number;
   size: number;
   state: number;
@@ -30,28 +30,18 @@ export class CircuitComponent implements OnInit {
 
   gateBegin: Slot;
 
-  constructor(private circuitService: CircuitService, private gateService: GateService) {}
+  constructor(private circuitService: CircuitService, private eventService: EventService) {}
 
   ngOnInit() {
+    this.eventService.on(Event.GATE_SELECTED, this.onGateSelected);
     this.circuitService.getCircuit().then(response => {
       this.loadCircuit(response);
-      /*this.size = response.size;
-      this.state = response.state;
-      this.layerCount = response.layerCount;
-      this.register = new Register(this.size);
-      for (let i = 0; i < this.size; i++) {
-        this.register.slots[i] = new Qubit(i, 0, 0);
-      }
-      this.setRegister();
-      this.layers = new Array<Layer<Slot>>(this.layerCount);
-
-      for (let i = 0; i < this.layerCount; i++) {
-        this.layers[i] = new CircuitLayer(this.size, i);
-        for (let j = 0; j < this.size; j++) {
-          this.layers[i].slots[j] = new Slot(j, i);
-        }
-      }*/
     });
+  }
+
+  onGateSelected(signature: string) {
+    this.selectedGate = signature;
+    this.freeGateBegin();
   }
 
   loadCircuit(circuit: CircuitResponse): void {
@@ -71,18 +61,19 @@ export class CircuitComponent implements OnInit {
   }
 
   addGate(slot: Slot): void {
-    const currentGate = this.gateService.getSelectedGate();
-    if (MULTIGATES.indexOf(currentGate) > -1) {
-      this.prepareMultiGate(slot, currentGate);
-    } else {
-      this.postAddGateRequest(currentGate, [slot.row], slot.col, []);
+    if (isNullOrUndefined(this.selectedGate) === false) {
+      if (MULTIGATES.indexOf(this.selectedGate) > -1) {
+        this.prepareMultiGate(slot);
+      } else {
+        this.postAddGateRequest(this.selectedGate, [slot.row], slot.col, []);
+      }
     }
   }
 
-  prepareMultiGate(slot: Slot, currentGate: string): void {
+  prepareMultiGate(slot: Slot): void {
     if (isNullOrUndefined(this.gateBegin)) {
       slot.freeze();
-      if (MODIFIERS.indexOf(currentGate) > -1) {
+      if (MODIFIERS.indexOf(this.selectedGate) > -1) {
         if (slot.name === EMPTY) {
           slot.unfreeze();
           return;
@@ -91,11 +82,11 @@ export class CircuitComponent implements OnInit {
       this.gateBegin = slot;
     } else {
       if (slot.col === this.gateBegin.col) {
-        this.addMultiGate(slot, currentGate);
+        this.addMultiGate(slot);
       }
     }
   }
-  addMultiGate(slot: Slot, currentGate: string): void {
+  addMultiGate(slot: Slot): void {
     this.linkSlots(slot);
     const controls = [];
     const qubits = [];
@@ -108,11 +99,11 @@ export class CircuitComponent implements OnInit {
         gate = slot.links[i].name;
       }
     }
-    if (MODIFIERS.indexOf(currentGate) > -1) {
+    if (MODIFIERS.indexOf(this.selectedGate) > -1) {
       controls.push(slot.row);
     } else {
       qubits.push(slot.row);
-      gate = currentGate;
+      gate = this.selectedGate;
     }
     this.freeGateBegin();
     this.postAddGateRequest(gate, qubits, slot.col, controls);
@@ -234,8 +225,10 @@ export class CircuitComponent implements OnInit {
   }
 
   freeGateBegin(): void {
-    this.gateBegin.unfreeze();
-    this.gateBegin = undefined;
+    if (isNullOrUndefined(this.gateBegin) === false) {
+      this.gateBegin.unfreeze();
+      this.gateBegin = undefined;
+    }
   }
 
 }

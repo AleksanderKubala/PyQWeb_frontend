@@ -1,4 +1,4 @@
-import { UP, MID, DOWN, SELECT, SOURCE, EXT } from '../img_config';
+import { UP, MID, DOWN, SELECT, SOURCE, EXT } from '../_config/img_config';
 
 export class CircuitElement  {
 

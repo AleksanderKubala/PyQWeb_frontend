@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GateService } from '../../services/gate_service/gate.service';
-import {CONTROL, MODIFIERS, MULTIGATES} from '../../img_config';
-import { GateInfoResponse } from '../../responses/gateinfo';
+import {CONTROL, MODIFIERS, MULTIGATES} from '../../_config/img_config';
+import {EventService} from '../../services/event_service/event.service';
+import {Event} from '../../_config/event_config';
+
 
 @Component({
   selector: 'app-gates',
@@ -14,7 +16,7 @@ export class GatesComponent implements OnInit {
   gates: string[];
   modifiers: string[];
 
-  constructor(private gateService: GateService) { }
+  constructor(private gateService: GateService, private eventService: EventService) { }
 
   ngOnInit() {
     this.modifiers = [CONTROL];
@@ -36,6 +38,6 @@ export class GatesComponent implements OnInit {
   }
 
   selectGate(gate: string): void {
-    this.gateService.setSelectedGate(gate);
+    this.eventService.emit(Event.GATE_SELECTED, gate);
   }
 }

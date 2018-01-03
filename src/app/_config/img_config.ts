@@ -1,5 +1,3 @@
-import {GateInfoResponse} from './responses/gateinfo';
-
 export const SOURCE = 'http://127.0.0.1:8887/';
 export const UP = '_up';
 export const DOWN = '_down';
