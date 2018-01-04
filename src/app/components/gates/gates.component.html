@@ -5,8 +5,8 @@
   <div class="row">
     <div *ngIf="gates" id="gates" class="btn-group" data-toggle="buttons-radio">
       <ul class="list-inline" >
-        <li *ngFor="let gate of gates">
-          <button type="button" class="btn btn-default" data-toggle="gates" (click)="selectGate(gate)">
+        <li *ngFor="let gate of gates" >
+          <button type="button" class="btn btn-default" data-toggle="gates" [class.active]="gate === selectedGate" (click)="selectGate(gate)">
             {{gate}}
           </button>
         </li>
@@ -20,7 +20,7 @@
     <div class="btn-group" role="group" data-toggle="buttons">
       <ul class="list-inline">
         <li *ngFor="let modifier of modifiers">
-          <button type="button" class="btn btn-default" data-toggle="button" (click)="selectGate(modifier)">
+          <button type="button" class="btn btn-default" data-toggle="button" [class.active]="modifier === selectedGate" (click)="selectGate(modifier)">
             {{modifier}}
           </button>
         </li>

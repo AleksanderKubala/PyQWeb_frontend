@@ -7,24 +7,23 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-  <script>
-    function getNewSize() {
-        return $('input[name="size_value"]').nodeValue
-    }
-  </script>
 </head>
 <body>
 <nav class="navbar navbar-inverse bg-inverse">
   <a class="navbar-brand">PyQ</a>
 </nav>
-
 <div class="container-fluid">
+  <div *ngIf="message" class="row">
+    <div class="alert alert-danger" role="alert">
+      {{message}}
+    </div>
+  </div>
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <app-gates id="gates"></app-gates>
       <app-results id="results"></app-results>
     </div>
-    <div class="col-sm-10">
+    <div class="col-sm-9">
       <app-circuit id="circuit"></app-circuit>
     </div>
   </div>

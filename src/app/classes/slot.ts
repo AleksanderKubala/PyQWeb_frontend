@@ -1,5 +1,5 @@
 import { CircuitElement } from './circuit_element';
-import { EMPTY } from '../img_config';
+import { EMPTY } from '../_config/img_config';
 
 
 export class Slot extends CircuitElement {

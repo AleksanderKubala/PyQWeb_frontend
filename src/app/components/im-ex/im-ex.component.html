@@ -1,0 +1,6 @@
+<div class="btn-group">
+  <label class="btn btn-primary" for="file_dialog">Import</label>
+  <label class="btn btn-primary" (click)="saveCircuit()">Export</label>
+</div>
+<input id="file_dialog" [(ngModel)]="input" type="file" class="hidden" accept=".json" (change)="readCircuit($event)">
+

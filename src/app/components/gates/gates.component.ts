@@ -15,6 +15,7 @@ export class GatesComponent implements OnInit {
 
   gates: string[];
   modifiers: string[];
+  selectedGate: string;
 
   constructor(private gateService: GateService, private eventService: EventService) { }
 
@@ -38,6 +39,7 @@ export class GatesComponent implements OnInit {
   }
 
   selectGate(gate: string): void {
-    this.eventService.emit(Event.GATE_SELECTED, gate);
+    this.selectedGate = gate;
+     this.eventService.emit(Event.GATE_SELECTED, gate);
   }
 }

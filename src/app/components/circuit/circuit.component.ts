@@ -12,6 +12,7 @@ import {RemoveGateResponse} from '../../responses/remove_gate';
 import {CircuitResponse} from '../../responses/circuit';
 import {EventService} from '../../services/event_service/event.service';
 import {Event} from '../../_config/event_config';
+import {CircuitRequest} from '../../requests/circuit';
 
 @Component({
   selector: 'app-circuit',
@@ -30,18 +31,32 @@ export class CircuitComponent implements OnInit {
 
   gateBegin: Slot;
 
-  constructor(private circuitService: CircuitService, private eventService: EventService) {}
+  constructor(private circuitService: CircuitService, private eventService: EventService) { }
 
   ngOnInit() {
-    this.eventService.on(Event.GATE_SELECTED, this.onGateSelected);
+    this.eventService.on(Event.GATE_SELECTED, this.onGateSelected, this);
+    this.eventService.on(Event.IMPORT_REQUEST, this.onImportRequest , this);
     this.circuitService.getCircuit().then(response => {
       this.loadCircuit(response);
     });
   }
 
   onGateSelected(signature: string) {
-    this.selectedGate = signature;
+    this.selectedGate = signature[0];
     this.freeGateBegin();
+  }
+
+  onImportRequest(request: CircuitRequest) {
+    const circuit = request[0];
+    this.circuitService.postCircuit(circuit).then(response => {
+      this.loadCircuit(response);
+    });
+  }
+
+  resetCircuit() {
+    this.circuitService.putReset().then(response => {
+      this.loadCircuit(response);
+    });
   }
 
   loadCircuit(circuit: CircuitResponse): void {
@@ -82,7 +97,9 @@ export class CircuitComponent implements OnInit {
       this.gateBegin = slot;
     } else {
       if (slot.col === this.gateBegin.col) {
-        this.addMultiGate(slot);
+        if ( slot.row !== this.gateBegin.row ) {
+          this.addMultiGate(slot);
+        }
       }
     }
   }
@@ -165,7 +182,7 @@ export class CircuitComponent implements OnInit {
   }
 
   postRemoveGateRequest(qubits: number[], layer: number): void {
-    this.circuitService.postRemoveGate(qubits, layer).then(response => {
+    this.circuitService.putRemoveGate(qubits, layer).then(response => {
       this.processCircuitChange(response.added, response.removed);
     });
   }

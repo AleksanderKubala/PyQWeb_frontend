@@ -13,6 +13,7 @@ import { CircuitService } from './services/circuit_service/circuit.service';
 import { ElementComponent } from './components/element/element.component';
 import { ResultsService } from './services/results_service/results.service';
 import {EventService} from './services/event_service/event.service';
+import { ImExComponent } from './components/im-ex/im-ex.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {EventService} from './services/event_service/event.service';
     CircuitComponent,
     ResultsComponent,
     ElementComponent,
+    ImExComponent,
   ],
   imports: [
     BrowserModule,

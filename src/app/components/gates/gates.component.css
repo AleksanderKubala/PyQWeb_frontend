@@ -5,3 +5,37 @@
 button {
   text-transform: uppercase;
 }
+
+button:hover {
+  background-color: #ffc55b;
+}
+
+button:active {
+  background-color: darkorange;
+}
+
+button:focus {
+  outline: 0;
+  background-color: darkorange;
+}
+
+button.active {
+  background-color: darkorange;
+}
+
+button.active:hover {
+  background-color: #ffc55b;
+}
+
+button.active:active {
+  background-color: darkorange;
+}
+
+button.active:focus {
+  background-color: darkorange;
+}
+
+
+
+
+
